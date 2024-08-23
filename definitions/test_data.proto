@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package model;
+
+option java_package = "ua.lomakin.grpc.model";
+option java_outer_classname = "DataProto";
+
+message DataResponse {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string phoneNumber = 4;
+  string address = 5;
+  string city = 6;
+  string country = 7;
+}
+
+message AllDataResponse {
+  repeated DataResponse dataResponse = 1;
+}
+
+message FindByCityRequest {
+  string city = 1;
+}
+
+message FindByIdRequest {
+  int32 id = 1;
+}
+
+message FindAllData {
+  string all = 1;
+}
+
+service DataService {
+  rpc FindByCity(FindByCityRequest) returns (stream AllDataResponse) {}
+  rpc FindById(FindByIdRequest) returns (DataResponse) {}
+  rpc FindAll(FindAllData) returns (stream AllDataResponse) {}
+}
